@@ -18,8 +18,10 @@
 
     在3.3版本基础上增加柜子灯光控制
     
+    修复4.1版本中对柜子内部灯光控制会有延迟的问题
+    
     Author: X-iaowh
-    Version: 4.1            for ESP32/ESP8266/Arduino...
+    Version: 4.3            for ESP32/ESP8266/Arduino...
     Date: 2020-04-16
 */
 #define BLINKER_WIFI        //  定义ESP32开发板为WiFi的连接方式
