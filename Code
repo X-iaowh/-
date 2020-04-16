@@ -71,7 +71,6 @@
 // 柜子灯光部分的引脚及状态定义
 #define Light 17                                //  设置柜子灯关接入引脚
 #define ImpactSensor 34                          //  设置碰撞传感器接入引脚
-boolean LightState = true;                      //  初始化灯关状态为开启
 
 bool programMode = false;       //  初始化编程为False,即默认不进入program Mode
 
@@ -459,7 +458,6 @@ void cycleLeds()
     digitalWrite(greenLed, LED_OFF);
     digitalWrite(blueLed, LED_OFF);
     Blinker.delay(200);
-    LightStateControl();                     // 控制柜子灯光的下一步状态
 }
 
 //////////////////////////////////////   正常模式提示灯函数normalModeOn()实现    //////////////////////////////////////
@@ -470,7 +468,6 @@ void normalModeOn()
     digitalWrite(greenLed, LED_OFF);
     digitalWrite(blueLed, LED_ON);
     digitalWrite(relay, CLOSE);              // 继电器复位，以保证门锁闭合
-    LightStateControl();                     // 控制柜子灯光的下一步状态
 }
 
 
@@ -712,24 +709,10 @@ void CabinetLightControl()
 {
     if(digitalRead(ImpactSensor) == HIGH)       //  进入中断函数后，判断碰撞传感器状态，再对下一步灯光状态进行赋值
     {                                           //  此做法代替对灯光状态直接进行取反操作，避免抖动的影响，可不加电容滤波，也可以不延时
-        LightState = true;
+        digitalWrite(Light, HIGH);
     }
     else
     {
-        LightState = false;
+        digitalWrite(Light, LOW);
     }
-}
-
-///////////////////////////////////      鞋柜灯的灯光状态控制函数LightStateControl()函数实现     ///////////////////////////////////
-void LightStateControl()
-{
-    if (LightState == true)                     
-    {
-        digitalWrite(Light, HIGH);              //  如果下一步灯光状态为true，则亮灯
-    }
-    else
-    {
-        digitalWrite(Light, LOW);               //  如果下一步灯光状态为false，则关灯
-    }
-    
 }
